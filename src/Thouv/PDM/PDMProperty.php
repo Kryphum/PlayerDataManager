@@ -6,7 +6,7 @@ class PDMProperty
 	public $property_name;
 	public $value;
 	
-	public function __construct(string $property_name, string $value)
+	public function __construct(string $property_name, $value)
 	{
 		$this->property_name = $property_name;
 		$this->value = $value;

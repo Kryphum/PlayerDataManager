@@ -3,7 +3,7 @@
 class PDMPropertyFactory
 {
 	
-	public static function makeProperty(string $property_name, string $value)
+	public static function makeProperty(string $property_name, $value)
 	{
 		return new PDMProperty($property_name, $value);
 	}
