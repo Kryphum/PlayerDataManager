@@ -50,5 +50,5 @@ You can update a property using `PDMPlayer::updateProperty()` which accepts a `s
 ```php
 $pdm_player->updateProperty("last_attack", PDMPropertyFactory::makeProperty("last_attack", time() - 1800));
 
-$pdm_player->unsetProperty("friends");
+$pdm_player->unsetProperties(["friends"]);
 ```
