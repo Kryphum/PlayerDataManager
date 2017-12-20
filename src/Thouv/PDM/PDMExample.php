@@ -6,7 +6,7 @@ $pdm = \Thouv\PDM\PlayerDataManager::getInstance();
 
 public function onFactionJoin(\My\Faction\Plugin\FactionJoinEvent $ev)
 {
-	$properties = \Thouv\PDM\PDMPropertyFactory::makeProperties(["faction_name" => $ev->getFaction()->getName(), "faction_rank" => 0]); // 0 is trainee or whatever
+	$properties = PDMPropertyFactory::makeProperties(["faction_name" => $ev->getFaction()->getName(), "faction_rank" => 0]); // 0 is trainee or whatever
 	$pdm->registerNewPlayer($ev->getPlayer())->setProperties($properties);
 }
 
