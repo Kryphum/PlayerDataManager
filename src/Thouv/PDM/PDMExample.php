@@ -6,7 +6,7 @@ $pdm = \Thouv\PDM\PlayerDataManager::getInstance();
 
 public function onFactionJoin(\My\Faction\Plugin\FactionJoinEvent $ev)
 {
-	$properties = \Thouv\PDM\PDMPropertyFactory::makeProperties(["faction_name" => $ev->getFaction()->getName(), "faction_rank" => 0]) // 0 is trainee or whatever
+	$properties = \Thouv\PDM\PDMPropertyFactory::makeProperties(["faction_name" => $ev->getFaction()->getName(), "faction_rank" => 0]); // 0 is trainee or whatever
 	$pdm->registerNewPlayer($ev->getPlayer())->setProperties($properties);
 }
 
@@ -19,5 +19,5 @@ public function onFactionPromote(\My\Faction\Plugin\FactionPromoteEvent $ev)
 
 public function onFactionLeave(\My\Faction\Plugin\FactionLeaveEvent $ev)
 {
-	$pdm->getPlayer($ev->getPlayer()->getName())->unsetProperties["faction_name", "faction_rank"];
+	$pdm->getPlayer($ev->getPlayer()->getName())->unsetProperties(["faction_name", "faction_rank"]);
 }
