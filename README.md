@@ -6,7 +6,7 @@ You can access PDM this way:
 ```php
 \Thouv\PDM\PlayerDataManager::getInstance();
 ```
-The rest of this README will assume `$pdm` to be the above, `$this` to be an instance of `\pocketmine\plugin\PluginBase`, `$player` to be an instance of `\pocketmine\Player`, and `$pdm_player` to be an instance of `PDMPlayer`.
+The rest of this README will assume `$pdm` to be the above, `$player` to be an instance of `\pocketmine\Player`, and `$pdm_player` to be an instance of `PDMPlayer`.
 ## Registering a player
 You can register a player to PDM using `PlayerDataManager::registerNewPlayer()`. This accepts either a `string` or an instance of `\pocketmine\Player` and returns an instance of `PDMPlayer`. Example:
 ```php
