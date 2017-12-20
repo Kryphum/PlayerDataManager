@@ -27,7 +27,7 @@ $property = PDMPropertyFactory::makeProperty("last_attack", time());
 $pdm->registerNewPlayer($player)->setProperties([$property]);
 
 $properties_ar = ["friends" => ["KateeX", "Caj2003", "BartonMC"], "enemies" => ["Queen_Amanda16"], "arch_enemy" => "LoganTDM2514"];
-$properties = PDMPropertyFactory::makeProperties(properties_ar);
+$properties = PDMPropertyFactory::makeProperties($properties_ar);
 $pdm->registerNewPlayer($player)->setProperties($properties);
 ```
 ## Fetching properties
