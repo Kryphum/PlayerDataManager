@@ -22,7 +22,7 @@ final class PlayerDataManager
 		if($player instanceof \pocketmine\Player) $player = $player->getName();
 		
 		$pdm_player = new PDMPlayer();
-		$this->players[$player->getName()] = $pdm_player;
+		$this->players[$player] = $pdm_player;
 		return $pdm_player;
 	}
 	
