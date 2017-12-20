@@ -1,5 +1,5 @@
 # PlayerDataManager
-This is a plugin for PocketMine servers that is really just a small API for deveopers to store data in a central place. PDM allows "registering" players as instances of PDMPlayer and adding "properties" (PDMProperty) to them. You can them access PDM from any plugin and fetch any property from any player.
+This is a plugin for PocketMine servers that is really just a small API for developers to store data in a central place throughout the server. PDM allows "registering" players as instances of `PDMPlayer` and adding "properties" (`PDMProperty`) to them. You can then access PDM from any plugin and fetch any property from any player.
 **NOTE** This is currently very simple and quite insignificant, but I have some cool features planned.
 Yes, I *am* aware that it's missing a `plugin.yml`, this isn't ready for production anyways, so deal with it.
 # THIS HAS NOT BEEN TESTED YET AND IS THEREFORE MOST LIKELY FULL OF BUGS
