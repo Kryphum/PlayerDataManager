@@ -2,6 +2,8 @@
 
 namespace Thouv\PDM;
 
+use pocketmine\Player;
+
 final class PlayerDataManager
 {
 	
@@ -19,16 +21,17 @@ final class PlayerDataManager
 	
 	public function registerPlayer($player)
 	{
-		if($player instanceof \pocketmine\Player) $player = $player->getName();
+		if($player instanceof Player) $player = $player->getName();
 		
 		$pdm_player = new PDMPlayer();
 		$this->players[$player] = $pdm_player;
 		return $pdm_player;
 	}
 	
-	public function getPlayer(string $name)
+	public function getPlayer($player)
 	{
-		return isset($this->players[$name]) ? $this->players[$name] : false;
+		if($player instanceof Player) $player = $player->getName();
+		return isset($this->players[$player]) ? $this->players[$player] : false;
 	}
 	
 }
