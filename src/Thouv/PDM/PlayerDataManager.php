@@ -17,7 +17,7 @@ final class PlayerDataManager
 		return self::$instance;
 	}
 	
-	public function registerNewPlayer($player)
+	public function registerPlayer($player)
 	{
 		if($player instanceof \pocketmine\Player) $player = $player->getName();
 		

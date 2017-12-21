@@ -1,5 +1,7 @@
 <?php
 
+// THIS IS NOT AN ACTUAL WORKING EXAMPLE
+
 use \Thouv\PDM\PDMPropertyFactory;
 
 $pdm = \Thouv\PDM\PlayerDataManager::getInstance();
@@ -7,7 +9,7 @@ $pdm = \Thouv\PDM\PlayerDataManager::getInstance();
 public function onFactionJoin(\My\Faction\Plugin\FactionJoinEvent $ev)
 {
 	$properties = PDMPropertyFactory::makeProperties(["faction_name" => $ev->getFaction()->getName(), "faction_rank" => 0]); // 0 is trainee or whatever
-	$pdm->registerNewPlayer($ev->getPlayer())->setProperties($properties);
+	$pdm->registerPlayer($ev->getPlayer())->setProperties($properties);
 }
 
 public function onFactionPromote(\My\Faction\Plugin\FactionPromoteEvent $ev)
