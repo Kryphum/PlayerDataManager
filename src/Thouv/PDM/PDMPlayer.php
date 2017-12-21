@@ -33,7 +33,10 @@ class PDMPlayer
 	
 	public function updateProperty(string $property_name, PDMProperty $property)
 	{
+		if($property_name !== $property->getPropertyName()) return false;
+		
 		$this->properties[$property_name] = $property;
+		return $this->getProperty($property_name);
 	}
 	
 }
