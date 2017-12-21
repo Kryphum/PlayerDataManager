@@ -19,9 +19,10 @@ $pdm->registerPlayer($player->getName());
 ```
 ___
 ### Getting a player
-You can get a player using `PlayerDataManager::getPlayer()` which accepts a `string` as the player's name and returns a `PDMPlayer`.
+You can get a player using `PlayerDataManager::getPlayer()` which accepts either a `string` as the player's name or an instance of `pocketmine\Player` and returns a `PDMPlayer`.
 ```php
-vardump($pdm->getPlayer($player->getName()); // object(PDMPlayer)#1 (1) { ["properties"]=> array(0) { } }
+var_dump($pdm->getPlayer($player->getName()); // object(PDMPlayer)#1 (1) { ["properties"]=> array(0) { } }
+var_dump($pdm->getPlayer($player)); // object(PDMPlayer)#1 (1) { ["properties"]=> array(0) { } }
 ```
 ___
 ### Adding properties
