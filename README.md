@@ -11,11 +11,11 @@ You can access PDM this way:
 *The rest of this README will assume `$pdm` to be the above, `$player` to be an instance of `\pocketmine\Player`, and `$pdm_player` to be an instance of `PDMPlayer`.*
 ___
 ### Registering a player
-You can register a player to PDM using `PlayerDataManager::registerNewPlayer()`. This accepts either a `string` or an instance of `\pocketmine\Player` and returns an instance of `PDMPlayer`. Example:
+You can register a player to PDM using `PlayerDataManager::registerPlayer()`. This accepts either a `string` or an instance of `\pocketmine\Player` and returns an instance of `PDMPlayer`. Example:
 ```php
-$pdm->registerNewPlayer($player);
+$pdm->registerPlayer($player);
 
-$pdm->registerNewPlayer($player->getName());
+$pdm->registerPlayer($player->getName());
 ```
 ___
 ### Getting a player
@@ -28,11 +28,11 @@ ___
 You can add properties to a player using `PDMPlayer::setProperties()`. This accepts an `array` of instances of `PDMProperty`. You can create such array through `PDMPropertyFactory::makeProperties()`, which accepts an `array` consisting of the property's name as the key and the property's value as the value, or `[PDMPropertyFactory::makeProperty()]`, which accepts a `string` `$property_name` and a `$value`.
 ```php
 $property = PDMPropertyFactory::makeProperty("last_attack", time());
-$pdm->registerNewPlayer($player)->setProperties([$property]);
+$pdm->registerPlayer($player)->setProperties([$property]);
 
 $properties_ar = ["friends" => ["KateeX", "Caj2003", "BartonMC"], "enemies" => ["Queen_Amanda16"], "arch_enemy" => "LoganTDM2514"];
 $properties = PDMPropertyFactory::makeProperties($properties_ar);
-$pdm->registerNewPlayer($player)->setProperties($properties);
+$pdm->registerPlayer($player)->setProperties($properties);
 ```
 ___
 ### Fetching properties
