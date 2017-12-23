@@ -39,7 +39,7 @@ class PDMSample extends PluginBase implements Listener
     public function onChat(PlayerChatEvent $ev)
     {
         $player = $ev->getPlayer();
-        $ev->setMessage(TextFormat::BOLD . strtoupper($player->getName()) . TextFormat::RESET . TextFormat::YELLOW . " last joined at UNIX " . TextFormat::GOLD . $pdm->getPlayer($player)->getProperty("last_joined")->getValue() . "\n"
+        $ev->setMessage(TextFormat::BOLD . strtoupper($player->getName()) . TextFormat::RESET . TextFormat::YELLOW . " last joined at UNIX " . TextFormat::GOLD . $this->pdm->getPlayer($player)->getProperty("last_joined")->getValue() . "\n"
         . TextFormat::RESET . $ev->getMessage());
     }
 

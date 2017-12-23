@@ -67,7 +67,7 @@ class PlayerDataManager extends PluginBase
 	
 	public function getPlayer($player)
 	{
-		if(!$player instanceof Player && !$player instanceof string) {
+		if(!$player instanceof Player && !is_string($player)) {
 			Server::getInstance()->getLogger()->error('$player is an instance of neither Player nor string in PlayerDataManager::getPlayer()');
 			return false;
 		}
