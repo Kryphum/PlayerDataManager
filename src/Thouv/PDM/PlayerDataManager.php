@@ -35,8 +35,10 @@ class PlayerDataManager extends PluginBase
 			return false;
 		}
 		if($player instanceof Player) $player = $player->getName();
-		if($this->getPlayer($player) && !$reset_if_exists) return false;
-		
+		if($this->getPlayer($player) && !$reset_if_exists) {
+			Server::getInstance()->getLogger()->warning('Attempted to register an existing player ' . $player);
+			return false;
+		}
 		$pdm_player = new PDMPlayer();
 		$this->players[$player] = $pdm_player;
 		return $pdm_player;
