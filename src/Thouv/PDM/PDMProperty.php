@@ -1,5 +1,7 @@
 <?php
 
+namespace Thouv\PDM;
+
 class PDMProperty
 {
 	

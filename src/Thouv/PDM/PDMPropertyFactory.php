@@ -1,5 +1,7 @@
 <?php
 
+namespace Thouv\PDM;
+
 use pocketmine\Server;
 
 class PDMPropertyFactory
