@@ -29,7 +29,7 @@ class PlayerDataManager extends PluginBase
 	
 	public function registerPlayer($player)
 	{
-		if(!$player instanceof Player && !$player instanceof string) {
+		if(!$player instanceof Player && !is_string($player)) {
 			Server::getInstance()->getLogger()->error('$player is an instance of neither Player nor string in PlayerDataManager::registerPlayer()');
 			return false;
 		}
@@ -47,7 +47,7 @@ class PlayerDataManager extends PluginBase
 
 	public function unregisterPlayer($player)
 	{
-		if(!$player instanceof Player && !$player instanceof string) {
+		if(!$player instanceof Player && !is_string($player)) {
 			Server::getInstance()->getLogger()->error('$player is an instance of neither Player nor string in PlayerDataManager::unregisterPlayer()');
 			return false;
 		}
