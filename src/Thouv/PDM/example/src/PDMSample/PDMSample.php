@@ -18,7 +18,7 @@ class PDMSample extends PluginBase implements Listener
 
     private $pdm;
 
-    public function onLoad()
+    public function onEnable()
     {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->pdm = PlayerDataManager::getInstance();
