@@ -16,16 +16,19 @@ class PDMPlayer
 	 * @return array An array of PDMProperty; the player's properties
 	 */
 	
-	public function setProperties(array $properties, bool $update = false)
+	public function setProperties(array $properties, bool $update_if_existent = false)
 	{
 		foreach($properties as $key => $property) {
 			if(!$property instanceof PDMProperty) {
 				Server::getInstance()->getLogger()->error('Element ' . $key . ' of properties array is not an instance of PDMProperty');
 				continue;
 			}
-			if(!$update && $this->getProperty($property->getPropertyName())) {
-				Server::getInstance()->getLogger()->error('Attempted to set existent property ' . $property->getPropertyName() . ' with $no_update set to true');
-				continue;
+			if($this->getProperty($property->getPropertyName())) {
+				if(!$update_if_existent) {
+					Server::getInstance()->getLogger()->warning('Attempted to set existent property ' . $property->getPropertyName());
+					continue;
+				}
+				Server::getInstance()->getLogger()->notice('Updating existent property ' . $property->getPropertyName() . ' in PDMPlayer::setProperties()');
 			}
 			$this->properties[$property->getPropertyName()] = $property;
 		}
@@ -36,7 +39,7 @@ class PDMPlayer
 	{
 		foreach($property_names as $property_name) {
 			if(!$this->getProperty($property_name)) {
-				Server::getInstance()->getLogger()->error('Attempted to unset nonexistent property ' . $property_name);
+				Server::getInstance()->getLogger()->warning('Attempted to unset nonexistent property ' . $property_name);
 				continue;
 			}
 			unset($this->properties[$property_name]);
@@ -72,7 +75,7 @@ class PDMPlayer
 				$this->setProperties([$property]);
 				return $property;
 			}
-			Server::getInstance()->getLogger()->error('Attempted to update nonexistent property ' . $property->getPropertyName());
+			Server::getInstance()->getLogger()->warning('Attempted to update nonexistent property ' . $property->getPropertyName());
 			return false;
 		}
 		

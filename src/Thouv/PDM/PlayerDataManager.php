@@ -24,16 +24,18 @@ class PlayerDataManager extends PluginBase
 
 	/**
 	 * @param string|Player $player
+	 * @param bool $reset_if_exists Re-registers (which also resets) the player if it already exists
 	 * @return PDMPlayer|bool The newly-created instance of PDMPlayer or false if neither a string nor an instance of Player was passed to the method
 	 */
 	
-	public function registerPlayer($player)
+	public function registerPlayer($player, bool $reset_if_exists = false)
 	{
 		if(!$player instanceof Player && !is_string($player)) {
 			Server::getInstance()->getLogger()->error('$player is an instance of neither Player nor string in PlayerDataManager::registerPlayer()');
 			return false;
 		}
 		if($player instanceof Player) $player = $player->getName();
+		if($this->getPlayer($player) && !$reset_if_exists) return false;
 		
 		$pdm_player = new PDMPlayer();
 		$this->players[$player] = $pdm_player;
