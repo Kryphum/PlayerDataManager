@@ -44,6 +44,7 @@ class PDMPlayer
 			}
 			unset($this->properties[$property_name]);
 		}
+		return $this->properties;
 	}
 	
 	public function getProperties()
