@@ -12,7 +12,7 @@ class PlayerDataManager extends PluginBase
 	private static $instance;
 	private $players;
 	
-	private function onLoad()
+	public function onLoad()
 	{
 		self::$instance = $this;
 	}
