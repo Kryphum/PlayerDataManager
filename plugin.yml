@@ -1,6 +1,6 @@
 name: PlayerDataManager
 main: Thouv\PDM\PlayerDataManager
-version: 1.0.1
+version: 1.0.2
 api: 3.0.0-ALPHA10
 load: POSTWORLD
 author: Thouv

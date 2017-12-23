@@ -2,21 +2,23 @@
 
 namespace Thouv\PDM;
 
+use pocketmine\plugin\PluginBase;
 use pocketmine\Player;
 use pocketmine\Server;
 
-final class PlayerDataManager
+class PlayerDataManager extends PluginBase
 {
 	
 	private static $instance;
 	private $players;
 	
-	private function __construct()
-	{}
+	private function onLoad()
+	{
+		self::$instance = $this;
+	}
 	
 	public static function getInstance()
 	{
-		if(!self::$instance) self::$instance = new PlayerDataManager();
 		return self::$instance;
 	}
 
@@ -51,11 +53,11 @@ final class PlayerDataManager
 		}
 		if($player instanceof Player) $player = $player->getName();
 
-		if(isset($this->players[$player])) {
-			unset($this->players[$player]);
-			return true;
+		if(!isset($this->players[$player])) {
+			return false;
 		}
-		return false;
+		unset($this->players[$player]);
+		return true;
 	}
 
 	/**
