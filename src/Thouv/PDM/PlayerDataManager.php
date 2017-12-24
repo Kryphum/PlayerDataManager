@@ -28,13 +28,8 @@ class PlayerDataManager extends PluginBase
 	 * @return PDMPlayer|bool The newly-created instance of PDMPlayer or false if neither a string nor an instance of Player was passed to the method
 	 */
 	
-	public function registerPlayer($player, bool $reset_if_exists = false)
+	public function registerPlayer(string $player, bool $reset_if_exists = false)
 	{
-		if(!$player instanceof Player && !is_string($player)) {
-			Server::getInstance()->getLogger()->error('$player is an instance of neither Player nor string in PlayerDataManager::registerPlayer()');
-			return false;
-		}
-		if($player instanceof Player) $player = $player->getName();
 		if($this->getPlayer($player) && !$reset_if_exists) {
 			Server::getInstance()->getLogger()->warning('Attempted to register an existing player ' . $player);
 			return false;
@@ -49,14 +44,8 @@ class PlayerDataManager extends PluginBase
 	 * @return bool True if the player was successfully unregistered, false if the player didn't exist
 	 */
 
-	public function unregisterPlayer($player)
+	public function unregisterPlayer(string $player)
 	{
-		if(!$player instanceof Player && !is_string($player)) {
-			Server::getInstance()->getLogger()->error('$player is an instance of neither Player nor string in PlayerDataManager::unregisterPlayer()');
-			return false;
-		}
-		if($player instanceof Player) $player = $player->getName();
-
 		if(!isset($this->players[$player])) {
 			return false;
 		}
@@ -69,14 +58,8 @@ class PlayerDataManager extends PluginBase
 	 * @return PDMPlayer|bool The specified player or false if it doesn't exist
 	 */
 	
-	public function getPlayer($player)
+	public function getPlayer(string $player)
 	{
-		if(!$player instanceof Player && !is_string($player)) {
-			Server::getInstance()->getLogger()->error('$player is an instance of neither Player nor string in PlayerDataManager::getPlayer()');
-			return false;
-		}
-		if($player instanceof Player) $player = $player->getName();
-
 		return isset($this->players[$player]) ? $this->players[$player] : false;
 	}
 	
