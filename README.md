@@ -8,32 +8,29 @@ You can access PDM this way:
 ```
 *The rest of this README will assume `$pdm` to be the above, `$player` to be an instance of `\pocketmine\Player`, and `$pdm_player` to be an instance of `PDMPlayer`.*
 ___
-All methods will return `false` and log an error to the console if the wrong data type is passed.
-___
 ### Registering a player
-You can register a player to PDM using `PlayerDataManager::registerPlayer()`. This accepts either a `string` or an instance of `\pocketmine\Player` and returns an instance of `PDMPlayer` or `false` if the player already exists. You can override this by setting `$reset_if_exists` to `true`, which will re-register the player (and therefore reset its properties) Example:
+You can register a player to PDM using `PlayerDataManager::registerPlayer()`. This accepts a `string` and returns an instance of `PDMPlayer` or `false` if the player already exists. You can override this by setting `$reset_if_exists` to `true`, which will re-register the player (and therefore reset its properties) Example:
 ```php
-$pdm->registerPlayer($player);
+$pdm->registerPlayer($player->getName());
 // will reset the above instance of PDMPlayer
 $pdm->registerPlayer($player->getName(), true);
 ```
 ___
 ### Fetching a player
-You can fetch a player using `PlayerDataManager::getPlayer()` which accepts either a `string` as the player's name or an instance of `pocketmine\Player` and returns a `PDMPlayer` or `false` if the player doesn't exist.
+You can fetch a player using `PlayerDataManager::getPlayer()` which accepts a `string` and returns a `PDMPlayer` or `false` if the player doesn't exist.
 ```php
 var_dump($pdm->getPlayer($player->getName()); // object(PDMPlayer)#1 (1) { ["properties"]=> array(0) { } }
-var_dump($pdm->getPlayer($player)); // object(PDMPlayer)#1 (1) { ["properties"]=> array(0) { } }
 ```
 ___
 ### Adding properties
 You can add properties to a player using `PDMPlayer::setProperties()`. This accepts an `array` of instances of `PDMProperty` and returns the player's properties (an `array` of `PDMProperty`). You can create such array through `PDMPropertyFactory::makeProperties()`, which accepts an `array` consisting of the property's name as the key and the property's value as the value, or `[PDMPropertyFactory::makeProperty()]`, which accepts a `string` `$property_name` and a `$value`.
 ```php
 $property = PDMPropertyFactory::makeProperty("last_join", time());
-$pdm->registerPlayer($player)->setProperties([$property]);
+$pdm->registerPlayer($player->getName())->setProperties([$property]);
 
 $properties_ar = ["friends" => ["KateeX", "Caj2003", "BartonMC"], "enemies" => ["Queen_Amanda16"], "arch_enemy" => "LoganTDM2514", "last_join" => time() + 60 * 60 * 8]; // i dont know why you would want to set the last join value to 8h ahead but it works for these purposes
 $properties = PDMPropertyFactory::makeProperties($properties_ar);
-$pdm->registerPlayer($player)->setProperties($properties); // this will set the friends, enemies, and arch_enemy properties but skip over last_join as it has already been set and log a warning to the console
+$pdm->registerPlayer($player->getName())->setProperties($properties); // this will set the friends, enemies, and arch_enemy properties but skip over last_join as it has already been set and log a warning to the console
 
 $pdm->registerPlayer($player)->setProperties($properties, true) // this will update all properties as they have all been already said (although it will keep friends, enemies, and arch_enemy seemingly unaffected as their values have not changed since they were set. it will log a notice to the console for each of them
 ```
@@ -63,8 +60,8 @@ $pdm_player->unsetProperties(["friends"]);
 ```
 ___
 ### Unregistering a player
-You can unregister a player using `PlayerDataManager::unregisterPlayer()` which accepts a `string` or an instance of `\pocketmine\Player` and returns `true` upon a successful unregistration (yes, I *am* aware that this isn't a word) or `false` if the player doesn't exist.
+You can unregister a player using `PlayerDataManager::unregisterPlayer()` which accepts a `string` and returns `true` upon a successful unregistration (yes, I *am* aware that this isn't a word) or `false` if the player doesn't exist.
 ```php
 $pdm->unregisterPlayer($player->getName()); // true
-$pdm->unregisterPlayer($player) // false (we already unregistered the player above)
+$pdm->unregisterPlayer($player->getName()) // false (we already unregistered the player above)
 ```
