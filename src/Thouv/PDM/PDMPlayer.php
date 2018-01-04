@@ -3,11 +3,29 @@
 namespace Thouv\PDM;
 
 use pocketmine\Server;
+use PDM\Thouv\utils\PropertyUtils;
 
 class PDMPlayer
 {
 	
-	public $properties = [];
+	protected $properties = [];
+	protected $name;
+	private $sync;
+
+	public function __construct(string $name, bool $sync)
+	{
+		$this->name = $name;
+
+		$pdm_sync = PlayerDataManager::getInstance()->sync_enabled;
+		if(!$pdm_sync) $sync = false;
+		if(is_null($sync)) $sync = PlayerDataManager::getInstance()->sync_enabled;
+		$this->sync = $sync;
+	}
+
+	public function getName()
+	{
+		return $this->name;
+	}
 
 	/**
 	 * Sets a property.
@@ -20,18 +38,62 @@ class PDMPlayer
 	{
 		foreach($properties as $key => $property) {
 			if(!$property instanceof PDMProperty) {
-				Server::getInstance()->getLogger()->error('Element ' . $key . ' of properties array is not an instance of PDMProperty');
+				Server::getInstance()->getLogger()->error('Element ' . $key . ' of properties array is not an instance of PDMProperty in PDMPlayer::setProperties()');
+				unset($properties[$key]);
 				continue;
 			}
-			if($this->getProperty($property->getPropertyName())) {
+			
+			$property_name = $property->getPropertyName();
+			if($this->getProperty($property_name)) {
 				if(!$update_if_existent) {
-					Server::getInstance()->getLogger()->warning('Attempted to set existent property ' . $property->getPropertyName());
+					Server::getInstance()->getLogger()->warning('Attempted to set existent property ' . $property_name . ' in PDMPlayer::setProperties()');
+					unset($properties[$key]);
 					continue;
 				}
-				Server::getInstance()->getLogger()->notice('Updating existent property ' . $property->getPropertyName() . ' in PDMPlayer::setProperties()');
+				Server::getInstance()->getLogger()->notice('Updating existent property ' . $property_name . ' in PDMPlayer::setProperties()');
 			}
-			$this->properties[$property->getPropertyName()] = $property;
+
+			$this->properties[$property_name] = $property;
 		}
+
+		if($this->sync) {
+			PlayerDataManager::getInstance()->getProvider()->updateProperties($this, array_map(array("PropertyUtils", "propertyToPropertyName"), $properties));
+		}
+
+		return $this->properties;
+	}
+
+	/**
+	 * Updates existing properties.
+	 * @param array $properties An array of PDMProperties that will each replace the one with its respective property name
+	 * @param bool $set_if_nonexistent Sets the property if it doesn't already exist when set to true
+	 */
+	
+	public function updateProperties(array $properties, bool $set_if_nonexistent = false)
+	{
+		foreach($properties as $key => $property) {
+			if(!$property instanceof PDMProperty) {
+				Server::getInstance()->getLogger()->error('Element ' . $key . ' of properties array is not an instance of PDMProperty in PDMPlayer::updateProperties()');
+				unset($properties[$key]);
+				continue;
+			}
+			if(!$this->getProperty($property->getPropertyName())) {
+				if($set_if_nonexistent) {
+					Server::getInstance()->getLogger()->notice('Setting nonexistent property ' . $property->getPropertyName() . ' in PDMPlayer::updateProperties()');
+					$this->setProperties([$property]);
+				}
+				Server::getInstance()->getLogger()->warning('Attempted to update nonexistent property ' . $property->getPropertyName() . ' in PDMPlayer::updateProperties()');
+				unset($properties[$key]);
+				continue;
+
+				$this->properties[$property->getPropertyName()] = $property;
+			}
+		}
+
+		if($this->sync) {
+			PlayerDataManager::getInstance()->getProvider()->updateProperties($this, array_map(array("PropertyUtils", "propertyToPropertyName"), $properties));
+		}
+
 		return $this->properties;
 	}
 	
@@ -39,11 +101,17 @@ class PDMPlayer
 	{
 		foreach($property_names as $property_name) {
 			if(!$this->getProperty($property_name)) {
-				Server::getInstance()->getLogger()->warning('Attempted to unset nonexistent property ' . $property_name);
+				Server::getInstance()->getLogger()->warning('Attempted to unset nonexistent property ' . $property_name . ' in PDMPlayer::unsetProperties()');
 				continue;
 			}
+
 			unset($this->properties[$property_name]);
 		}
+
+		if($this->sync) {
+			PlayerDataManager::getInstance()->getProvider()->updateProperties($this, $property_names);
+		}
+
 		return $this->properties;
 	}
 	
@@ -59,29 +127,6 @@ class PDMPlayer
 	public function getProperty(string $property_name)
 	{
 		return isset($this->getProperties()[$property_name]) ? $this->getProperties()[$property_name] : false;
-	}
-
-	/**
-	 * Updates an existing property.
-	 * @param PDMProperty $property The property that will replace the previous one
-	 * @param bool $set_if_nonexistent Sets the property if it doesn't already exist when set to true
-	 * @return PDMProperty|bool The property that was passed to the method or false if it doesn't exist and $set_if_nonexistent is false
-	 */
-	
-	public function updateProperty(PDMProperty $property, bool $set_if_nonexistent = false)
-	{
-		if(!$this->getProperty($property->getPropertyName())) {
-			if($set_if_nonexistent) {
-				Server::getInstance()->getLogger()->notice('Setting nonexistent property ' . $property->getPropertyName() . ' in PDMPlayer::updateProperty()');
-				$this->setProperties([$property]);
-				return $property;
-			}
-			Server::getInstance()->getLogger()->warning('Attempted to update nonexistent property ' . $property->getPropertyName());
-			return false;
-		}
-		
-		$this->properties[$property->getPropertyName()] = $property;
-		return $property;
 	}
 	
 }

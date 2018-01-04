@@ -1,0 +1,9 @@
+---
+enable-sync: false
+mysql:
+  host: 127.0.0.1
+  username: username
+  password: password
+  database: pdm
+  port: 3306
+...

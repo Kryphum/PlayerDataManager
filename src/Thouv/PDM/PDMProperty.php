@@ -5,13 +5,14 @@ namespace Thouv\PDM;
 class PDMProperty
 {
 	
-	public $property_name;
-	public $value;
+	protected $property_name;
+	protected $value;
+	private $flags;
 	
-	public function __construct(string $property_name, $value)
+	public function __construct(string $property_name, $value, array $flags = null)
 	{
 		$this->property_name = $property_name;
-		$this->value = $value;
+		$this->flags = $flags;
 	}
 	
 	public function getPropertyName()
@@ -22,6 +23,26 @@ class PDMProperty
 	public function getValue()
 	{
 		return $this->value;
+	}
+
+	public function setFlag(string $flag_name, $flag_value)
+	{
+		$this->flags[$flag_name] = $flag_value;
+	}
+
+	public function getFlag(string $flag_name)
+	{
+		return $this->flags[$flag_name];
+	}
+
+	/**
+	 * Whether or not this property has an explicit no-sync. Don't fight me on the grounds that this is a bad name, because you're wrong.
+	 * @return bool Whether or not this property should be synced.
+	 */
+
+	public function toSyncOrNotToSync()
+	{
+		return $this->getFlag("no_sync") === false;
 	}
 	
 	public function toArray()
