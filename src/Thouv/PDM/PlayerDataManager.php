@@ -19,8 +19,10 @@ final class PlayerDataManager extends PluginBase
 		self::$instance = $this;
 
 		$this->sync_enabled = $this->getConfig()->get("enable-sync");
-		$this->setProvider();
-		$this->getServer()->getScheduler()->scheduleRepeatingTask($this->getProvider()->getPingClass(), 20 * 60 * 5);
+		if($this->sync_enabled) {
+			$this->setProvider();
+			$this->getServer()->getScheduler()->scheduleRepeatingTask($this->getProvider()->getPingClass(), 20 * 60 * 5);
+		}
 
 		$this->players = $this->getProvider()->getAllPlayers();
 	}
