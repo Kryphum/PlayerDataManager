@@ -82,13 +82,13 @@ class PDMPlayer
 					Server::getInstance()->getLogger()->warning('Attempted to update nonexistent property ' . $property->getPropertyName() . ' in PDMPlayer::updateProperties()');
 					unset($properties[$key]);
 					continue;
-				} else {
-					Server::getInstance()->getLogger()->notice('Setting nonexistent property ' . $property->getPropertyName() . ' in PDMPlayer::updateProperties()');
-					$this->setProperties([$property]);
 				}
-
-				$this->properties[$property->getPropertyName()] = $property;
+				Server::getInstance()->getLogger()->notice('Setting nonexistent property ' . $property->getPropertyName() . ' in PDMPlayer::updateProperties()');
+				$this->setProperties([$property]);
+				continue;
 			}
+
+			$this->properties[$property->getPropertyName()] = $property;
 		}
 
 		if($this->sync) {
