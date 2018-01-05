@@ -7,7 +7,7 @@ use Thouv\PDM\PDMPlayer;
 use Thouv\PDM\PDMPropertyFactory;
 use Thouv\PDM\tasks\PDMMySQLPingTask;
 
-class PDMMySQLProvider implements PDMMySQLProvider
+class PDMMySQLProvider implements PDMProvider
 {
 
     protected $plugin;
