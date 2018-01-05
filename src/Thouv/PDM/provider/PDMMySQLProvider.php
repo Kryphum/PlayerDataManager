@@ -28,7 +28,8 @@ class PDMMySQLProvider implements PDMProvider
 
     private function makeConnection()
     {
-        return new \mysqli(...$this->plugin->getConfig()->get("mysql"));
+        $creds = $this->plugin->getConfig()->get("mysql");
+        return new \mysqli($creds["host"], $creds["username"], $creds["password"], $creds["database"], $creds["port"]);
     }
 
     // This getter is useless right now, but I might want to add logic later
