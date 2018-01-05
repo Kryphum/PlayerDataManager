@@ -75,7 +75,7 @@ class PDMMySQLProvider implements PDMProvider
         $stmt->bind_result($player_name, $properties);
         $players = [];
         while($stmt->fetch()) {
-            $pdm_player = new PDMPlayer($player_name);
+            $pdm_player = new PDMPlayer($player_name, true);
             $pdm_player->setProperties(
                 unserialize($properties)
             );
@@ -105,7 +105,7 @@ class PDMMySQLProvider implements PDMProvider
         $stmt->fetch();
         $stmt->bind_result($properties);
 
-        $pdm_player = new PDMPlayer($player_name);
+        $pdm_player = new PDMPlayer($player_name, true);
         $pdm_player->setProperties(
             unserialize($properties)
         );
