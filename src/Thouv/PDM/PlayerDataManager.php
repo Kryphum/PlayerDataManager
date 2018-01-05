@@ -5,6 +5,7 @@ namespace Thouv\PDM;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Player;
 use pocketmine\Server;
+use Thouv\PDM\provider\PDMMySQLProvider;
 
 final class PlayerDataManager extends PluginBase
 {
