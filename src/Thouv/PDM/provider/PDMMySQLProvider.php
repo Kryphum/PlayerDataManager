@@ -34,6 +34,7 @@ class PDMMySQLProvider implements PDMProvider
 
     public function getConnection()
     {
+        if(!$this->connection instanceof \mysqli) $this->makeConnection();
         return $this->connection;
     }
 
@@ -47,7 +48,7 @@ class PDMMySQLProvider implements PDMProvider
 
         if($this->getPlayer($player_name)) return false;
 
-        $stmt = $this->getConnection()->prepare("INSERT INTO pdm_players (player_name) VALUES(?, ?);");
+        $stmt = $this->getConnection()->prepare("INSERT INTO pdm_players (player_name) VALUES(?);");
         $stmt->bind_param("s", $player_name);
         $player_name = $player->getName();
         $stmt->execute();
