@@ -18,7 +18,10 @@ final class PlayerDataManager extends PluginBase
 	public function onLoad()
 	{
 		self::$instance = $this;
+	}
 
+	public function onEnable()
+	{
 		$this->sync_enabled = $this->getConfig()->get("enable-sync");
 		if($this->sync_enabled) {
 			$this->setProvider();
