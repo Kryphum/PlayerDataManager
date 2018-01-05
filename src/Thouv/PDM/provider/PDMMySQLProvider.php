@@ -32,8 +32,7 @@ class PDMMySQLProvider implements PDMProvider
         return new \mysqli($creds["host"], $creds["username"], $creds["password"], $creds["database"], $creds["port"]);
     }
 
-    // This getter is useless right now, but I might want to add logic later
-    protected function getConnection()
+    public function getConnection()
     {
         return $this->connection;
     }

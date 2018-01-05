@@ -10,7 +10,7 @@ class PDMMySQLPingTask extends PluginTask
 
     public function onRun(int $currentTick)
     {
-        $this->getOwner()->getProvider()->ping();
+        $this->getOwner()->getProvider()->getConnection()->ping();
     }
 
 }
