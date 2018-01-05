@@ -65,7 +65,7 @@ final class PlayerDataManager extends PluginBase
 			return false;
 		}
 
-		$pdm_player = new PDMPlayer($player_name);
+		$pdm_player = new PDMPlayer($player_name, $sync);
 		$this->players[$player_name] = $pdm_player;
 
 		if($sync && $this->getProvider()) $this->getProvider()->registerPlayer($pdm_player);
