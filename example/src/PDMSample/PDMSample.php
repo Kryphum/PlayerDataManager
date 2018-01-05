@@ -27,23 +27,23 @@ class PDMSample extends PluginBase implements Listener
     public function onJoin(PlayerJoinEvent $ev)
     {
         $player = $ev->getPlayer();
-        $pdm_player = $this->pdm->getPlayer($player);
+        $pdm_player = $this->pdm->getPlayer($player->getName());
         if(!$pdm_player) {
             echo "first join\n";
-            $pdm_player = $this->pdm->registerPlayer($player);
+            $pdm_player = $this->pdm->registerPlayer($player->getName());
         } else {
-            $prop = $this->pdm->getPlayer($player)->getProperty("last_joined");
+            $prop = $this->pdm->getPlayer($player->getName())->getProperty("last_joined");
             echo $prop->getPropertyName() . ":" . $prop->getValue() . " ";
         }
         $pdm_player->updateProperty(PDMPropertyFactory::makeProperty("last_joined", time()), true);
-        $prop = $this->pdm->getPlayer($player)->getProperty("last_joined");
+        $prop = $this->pdm->getPlayer($player->getName())->getProperty("last_joined");
         echo $prop->getPropertyName() . ":" . $prop->getValue();
     }
 
     public function onChat(PlayerChatEvent $ev)
     {
         $player = $ev->getPlayer();
-        $ev->setMessage(TextFormat::BOLD . strtoupper($player->getName()) . TextFormat::RESET . TextFormat::YELLOW . " last joined at UNIX " . TextFormat::GOLD . $this->pdm->getPlayer($player)->getProperty("last_joined")->getValue() . "\n"
+        $ev->setMessage(TextFormat::BOLD . strtoupper($player->getName()) . TextFormat::RESET . TextFormat::YELLOW . " last joined at UNIX " . TextFormat::GOLD . $this->pdm->getPlayer($player->getName())->getProperty("last_joined")->getValue() . "\n"
         . TextFormat::RESET . $ev->getMessage());
     }
 
