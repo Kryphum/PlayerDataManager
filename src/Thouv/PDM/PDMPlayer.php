@@ -3,7 +3,6 @@
 namespace Thouv\PDM;
 
 use pocketmine\Server;
-use PDM\Thouv\utils\PropertyUtils;
 
 class PDMPlayer
 {
@@ -57,7 +56,7 @@ class PDMPlayer
 		}
 
 		if($this->sync) {
-			PlayerDataManager::getInstance()->getProvider()->updateProperties($this, array_map(array("PropertyUtils", "propertyToPropertyName"), $properties));
+			PlayerDataManager::getInstance()->getProvider()->updateProperties($this, array_map(array("Thouv\PDM\utils\PropertyUtils", "propertyToPropertyName"), $properties));
 		}
 
 		return $this->properties;
@@ -92,7 +91,7 @@ class PDMPlayer
 		}
 
 		if($this->sync) {
-			PlayerDataManager::getInstance()->getProvider()->updateProperties($this, array_map(array("PropertyUtils", "propertyToPropertyName"), $properties));
+			PlayerDataManager::getInstance()->getProvider()->updateProperties($this, array_map(array("Thouv\PDM\utils\PropertyUtils", "propertyToPropertyName"), $properties));
 		}
 
 		return $this->properties;
