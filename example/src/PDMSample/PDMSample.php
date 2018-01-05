@@ -30,7 +30,7 @@ class PDMSample extends PluginBase implements Listener
         $pdm_player = $this->pdm->getPlayer($player->getName());
         if(!$pdm_player) {
             echo "first join\n";
-            $pdm_player = $this->pdm->registerPlayer($player->getName());
+            $pdm_player = $this->pdm->registerPlayer($player->getName(), true);
         } else {
             $prop = $this->pdm->getPlayer($player->getName())->getProperty("last_joined");
             echo $prop->getPropertyName() . ":" . $prop->getValue() . " ";
