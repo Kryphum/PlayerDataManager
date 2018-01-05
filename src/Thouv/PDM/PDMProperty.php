@@ -12,6 +12,7 @@ class PDMProperty
 	public function __construct(string $property_name, $value, array $flags = null)
 	{
 		$this->property_name = $property_name;
+		$this->value = $value;
 		$this->flags = $flags;
 	}
 	
