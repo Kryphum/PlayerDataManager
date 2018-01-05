@@ -33,7 +33,7 @@ class PDMProperty
 
 	public function getFlag(string $flag_name)
 	{
-		return $this->flags[$flag_name];
+		return isset($this->flags[$flag_name]) ? $this->flags[$flag_name] : false;
 	}
 
 	/**
