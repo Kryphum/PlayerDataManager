@@ -4,6 +4,7 @@ namespace Thouv\PDM\provider;
 
 use Thouv\PDM\PlayerDataManager;
 use Thouv\PDM\PDMPlayer;
+use Thouv\PDM\PDMProperty;
 use Thouv\PDM\PDMPropertyFactory;
 use Thouv\PDM\tasks\PDMMySQLPingTask;
 
@@ -72,13 +73,12 @@ class PDMMySQLProvider implements PDMProvider
         $stmt = $this->getConnection()->prepare("SELECT player_name, properties FROM pdm_players;");
         $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($player_name, $properties);
+        $stmt->bind_result($player_name, $serialized_properties);
         $players = [];
         while($stmt->fetch()) {
             $pdm_player = new PDMPlayer($player_name, true);
-            $pdm_player->setProperties(
-                unserialize($properties)
-            );
+            if(($properties = unserialize($serialized_properties)) instanceof PDMProperty) $pdm_player->setProperties($properties);
+            
             $players[$player_name] = $pdm_player;
         }
         $stmt->free_result();
@@ -103,12 +103,10 @@ class PDMMySQLProvider implements PDMProvider
         }
 
         $stmt->fetch();
-        $stmt->bind_result($properties);
+        $stmt->bind_result($serialized_properties);
 
         $pdm_player = new PDMPlayer($player_name, true);
-        $pdm_player->setProperties(
-            unserialize($properties)
-        );
+        if(($properties = unserialize($serialized_properties)) instanceof PDMProperty) $pdm_player->setProperties($properties);
 
         $stmt->free_result();
         $stmt->close();
