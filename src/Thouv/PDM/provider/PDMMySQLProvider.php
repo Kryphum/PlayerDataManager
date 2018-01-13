@@ -4,8 +4,6 @@ namespace Thouv\PDM\provider;
 
 use Thouv\PDM\PlayerDataManager;
 use Thouv\PDM\PDMPlayer;
-use Thouv\PDM\PDMProperty;
-use Thouv\PDM\PDMPropertyFactory;
 use Thouv\PDM\tasks\PDMMySQLPingTask;
 
 class PDMMySQLProvider implements PDMProvider
@@ -106,7 +104,7 @@ class PDMMySQLProvider implements PDMProvider
         $stmt->bind_result($serialized_properties);
 
         $pdm_player = new PDMPlayer($player_name, true);
-        if(($properties = unserialize($serialized_properties)) instanceof PDMProperty) $pdm_player->setProperties($properties);
+        if(is_array($properties = unserialize($serialized_properties))) $pdm_player->setProperties($properties);
 
         $stmt->free_result();
         $stmt->close();
