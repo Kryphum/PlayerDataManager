@@ -55,7 +55,7 @@ class PDMMySQLProvider implements PDMProvider
         $stmt->execute();
         $stmt->close();
 
-        if(!empty($player->getProperties())) $this->updateAllProperties($player);
+        if(!empty($player->getProperties())) $this->updateProperties($player);
     }
 
     public function unregisterPlayer(string $player_name)
@@ -114,21 +114,25 @@ class PDMMySQLProvider implements PDMProvider
         return $pdm_player;
     }
 
-    public function updateProperties(PDMPlayer $player, array $property_names)
+    public function updateProperties(PDMPlayer $player, array $property_names = null)
     {
         $properties = $this->getPlayer($player->getName())->getProperties();
 
-        foreach($property_names as $property_name) {
-            if(!is_string($property_name)) continue;
+        if(is_null($property_names)) {
+            foreach($property_names as $property_name) {
+                if(!is_string($property_name)) continue;
 
-            $property = $player->getProperty($property_name);
-            if(!$property) {
-                unset($properties[$property_name]);
-                continue;
+                $property = $player->getProperty($property_name);
+                if(!$property) {
+                    unset($properties[$property_name]);
+                    continue;
+                }
+
+                if(!$property->toSyncOrNotToSync()) continue;
+                $properties[$property_name] = $property;
             }
-
-            if(!$property->toSyncOrNotToSync()) continue;
-            $properties[$property_name] = $property;
+        } else {
+            $properties = $player->getProperties();
         }
 
         $stmt = $this->getConnection()->prepare("UPDATE pdm_players SET properties=? WHERE player_name=?;");
