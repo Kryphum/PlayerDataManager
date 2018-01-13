@@ -115,9 +115,21 @@ class PDMPlayer
 		return $this->properties;
 	}
 	
-	public function getProperties()
+	public function getProperties(array $conditions = null) // conditions is in the form [flag => [possible values]]
 	{
-		return $this->properties;
+		if(is_null($conditions)) return $this->properties;
+
+		$properties = $this->getProperties();
+		foreach($this->getProperties() as $property) {
+			foreach($conditions as $flag_name => $values) {
+				if(!is_array($values)) continue;
+
+				if(!in_array($property->getFlag($flag_name), $values)) {
+					unset($properties[$property->getPropertyName()]);
+					break 2;
+				}
+			}
+		}
 	}
 
 	/**

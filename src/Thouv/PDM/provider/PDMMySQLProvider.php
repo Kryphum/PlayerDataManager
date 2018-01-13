@@ -114,7 +114,9 @@ class PDMMySQLProvider implements PDMProvider
 
     public function updateProperties(PDMPlayer $player, array $property_names = null)
     {
-        $properties = $this->getPlayer($player->getName())->getProperties();
+        $properties = $this->getPlayer($player->getName())->getProperties([
+            "no_sync" => [false]
+        ]);
 
         if(is_null($property_names)) {
             foreach($property_names as $property_name) {
