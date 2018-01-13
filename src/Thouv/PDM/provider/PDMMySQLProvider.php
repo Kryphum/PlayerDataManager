@@ -114,9 +114,7 @@ class PDMMySQLProvider implements PDMProvider
 
     public function updateProperties(PDMPlayer $player, array $property_names = null)
     {
-        $properties = $this->getPlayer($player->getName())->getProperties([
-            "no_sync" => [false]
-        ]);
+        $properties = $this->getPlayer($player->getName())->getProperties();
 
         if(is_null($property_names)) {
             foreach($property_names as $property_name) {
@@ -132,7 +130,9 @@ class PDMMySQLProvider implements PDMProvider
                 $properties[$property_name] = $property;
             }
         } else {
-            $properties = $player->getProperties();
+            $properties = $player->getProperties([
+                "no_sync" => ["blacklist", true]
+            ]);
         }
 
         $stmt = $this->getConnection()->prepare("UPDATE pdm_players SET properties=? WHERE player_name=?;");
