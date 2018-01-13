@@ -31,6 +31,10 @@ class PDMProperty
 		$this->flags[$flag_name] = $flag_value;
 	}
 
+	/**
+	 * @return string|null The specified flag's value or null if it doesn't exist
+	 */
+
 	public function getFlag(string $flag_name)
 	{
 		return isset($this->flags[$flag_name]) ? $this->flags[$flag_name] : null;
