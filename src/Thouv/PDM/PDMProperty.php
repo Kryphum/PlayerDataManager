@@ -47,7 +47,7 @@ class PDMProperty
 
 	public function toSyncOrNotToSync()
 	{
-		return $this->getFlag("no_sync") === false;
+		return $this->getFlag("no_sync") !== true;
 	}
 	
 	public function toArray()
