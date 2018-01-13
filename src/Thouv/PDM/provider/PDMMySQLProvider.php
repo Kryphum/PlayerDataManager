@@ -77,7 +77,7 @@ class PDMMySQLProvider implements PDMProvider
         $players = [];
         while($stmt->fetch()) {
             $pdm_player = new PDMPlayer($player_name, true);
-            if(($properties = unserialize($serialized_properties)) instanceof PDMProperty) $pdm_player->setProperties($properties);
+            if(is_array($properties = unserialize($serialized_properties))) $pdm_player->setProperties($properties);
             
             $players[$player_name] = $pdm_player;
         }
