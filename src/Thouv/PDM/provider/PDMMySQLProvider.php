@@ -116,7 +116,7 @@ class PDMMySQLProvider implements PDMProvider
     {
         $properties = $this->getPlayer($player->getName())->getProperties();
 
-        if(is_null($property_names)) {
+        if(!is_null($property_names)) {
             foreach($property_names as $property_name) {
                 if(!is_string($property_name)) continue;
 
