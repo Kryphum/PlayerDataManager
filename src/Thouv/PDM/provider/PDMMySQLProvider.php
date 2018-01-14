@@ -131,7 +131,7 @@ class PDMMySQLProvider implements PDMProvider
             }
         } else {
             $properties = $player->getProperties([
-                "no_sync" => ["blacklist", true]
+                "no_sync" => ["blacklist", [true]]
             ]);
         }
 

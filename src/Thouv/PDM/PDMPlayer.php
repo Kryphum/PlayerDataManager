@@ -125,7 +125,7 @@ class PDMPlayer
                 if(!is_array($values) || !in_array($values[0], ["whitelist", "blacklist"]) || !is_array($values[1])) continue;
 
                 $triceratops = $values[0] === "blacklist";
-                if(in_array($property->getFlag($flag_name), $values) === $triceratops) {
+                if(in_array($property->getFlag($flag_name), $values[1]) === $triceratops) {
                     unset($properties[$property->getPropertyName()]);
                     continue 2;
                 }
