@@ -122,10 +122,11 @@ class PDMPlayer
         $properties = $this->getProperties();
         foreach($this->getProperties() as $property) {
             foreach($conditions as $flag_name => $values) {
-                if(!is_array($values) || !in_array($values[0], ["whitelist", "blacklist"]) || !is_array($values[1])) continue;
+                $valid = is_array($values) && in_array($values[0], ["whitelist", "blacklist"]) && is_array($values[1]);
+                if(!$valid) continue;
 
                 $triceratops = $values[0] === "blacklist";
-                if(in_array($property->getFlag($flag_name), $values[1]) === $triceratops) {
+                if(in_array($property->getFlag($flag_name), $values[1], true) === $triceratops) {
                     unset($properties[$property->getPropertyName()]);
                     continue 2;
                 }
