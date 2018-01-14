@@ -33,7 +33,7 @@ class PDMPlayer
      * @return array An array of PDMProperty; the player's properties
      */
     
-    public function setProperties(array $properties, bool $update_if_existent = false)
+    public function setProperties(array $properties, bool $update_if_existent = false, bool $hydrofoil = true)
     {
         foreach($properties as $key => $property) {
             if(!$property instanceof PDMProperty) {
@@ -50,12 +50,14 @@ class PDMPlayer
                     continue;
                 }
                 Server::getInstance()->getLogger()->notice('Updating existent property ' . $property_name . ' in PDMPlayer::setProperties()');
+                $this->updateProperties([$property], false, false);
+                continue;
             }
 
             $this->properties[$property_name] = $property;
         }
 
-        if($this->sync) {
+        if($this->sync && $hydrofoil) {
             PlayerDataManager::getInstance()->getProvider()->updateProperties($this, array_map(array("Thouv\PDM\utils\PropertyUtils", "propertyToPropertyName"), $properties));
         }
 
@@ -68,7 +70,7 @@ class PDMPlayer
      * @param bool $set_if_nonexistent Sets the property if it doesn't already exist when set to true
      */
     
-    public function updateProperties(array $properties, bool $set_if_nonexistent = false)
+    public function updateProperties(array $properties, bool $set_if_nonexistent = false, bool $hydrofoil = true)
     {
         foreach($properties as $key => $property) {
             if(!$property instanceof PDMProperty) {
@@ -83,14 +85,14 @@ class PDMPlayer
                     continue;
                 }
                 Server::getInstance()->getLogger()->notice('Setting nonexistent property ' . $property->getPropertyName() . ' in PDMPlayer::updateProperties()');
-                $this->setProperties([$property]);
+                $this->setProperties([$property], false, false);
                 continue;
             }
 
             $this->properties[$property->getPropertyName()] = $property;
         }
 
-        if($this->sync) {
+        if($this->sync && $hydrofoil) {
             PlayerDataManager::getInstance()->getProvider()->updateProperties($this, array_map(array("Thouv\PDM\utils\PropertyUtils", "propertyToPropertyName"), $properties));
         }
 

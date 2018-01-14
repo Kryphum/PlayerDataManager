@@ -6,6 +6,6 @@ class PropertyUtils
 {
     public static function propertyToPropertyName($value)
     {
-        $value = $value->getPropertyName();
+        return $value->getPropertyName();
     }
 }
