@@ -14,6 +14,6 @@ interface PDMProvider
     public function unregisterPlayer(string $player_name);
     public function getAllPlayers();
     public function getPlayer(string $player_name);
-    public function updateProperties(PDMPlayer $player, array $property_names);
+    public function updateProperties(PDMPlayer $player, array $property_names = null);
 
 }
