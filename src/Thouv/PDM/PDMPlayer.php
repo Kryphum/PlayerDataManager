@@ -122,7 +122,7 @@ class PDMPlayer
         if(is_null($conditions)) return $this->properties;
 
         $properties = $this->getProperties();
-        foreach($this->getProperties() as $property) {
+        foreach($properties as $property) {
             foreach($conditions as $flag_name => $values) {
                 $valid = is_array($values) && in_array($values[0], ["whitelist", "blacklist"]) && is_array($values[1]);
                 if(!$valid) continue;
@@ -134,6 +134,7 @@ class PDMPlayer
                 }
             }
         }
+        return $properties;
     }
 
     /**
