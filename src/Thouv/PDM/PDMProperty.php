@@ -52,7 +52,7 @@ class PDMProperty
 	
 	public function toArray()
 	{
-		return [$this->getPropertyName() => [$this->getValue(), "flags" => json_encode($this->flags)]];
+		return [$this->getPropertyName() => [$this->getValue(), "flags" => $this->flags]];
 	}
 	
 }
