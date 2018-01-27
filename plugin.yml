@@ -2,7 +2,7 @@ name: PlayerDataManager
 main: Thouv\PDM\PlayerDataManager
 version: 2.1.2-BETA
 api: 3.0.0-ALPHA10
-load: POSTWORLD
+load: STARTUP
 author: Thouv
 description: "PlayerDataManager is an API that allows developers to store data in a central place"
 website: https://github.com/Thouvvv/PlayerDataManager
