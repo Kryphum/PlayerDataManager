@@ -36,7 +36,7 @@ class PDMSample extends PluginBase implements Listener
                 echo $prop->getPropertyName() . ":" . $prop->getValue() . " ";
             }
         }
-        $pdm_player->updateProperties([PDMPropertyFactory::makeProperty("last_joined", time())], true);
+        $pdm_player->updateProperties([PDMPropertyFactory::makeProperty("last_joined", time(), ["no_sync" => true])], true);
         $prop = $this->pdm->getPlayer($player->getName())->getProperty("last_joined");
         echo $prop->getPropertyName() . ":" . $prop->getValue();
     }
